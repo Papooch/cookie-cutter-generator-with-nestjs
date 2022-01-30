@@ -1,11 +1,23 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "parserOptions": {
+    "project": "tsconfig.base.json"
+  },
+  "plugins": ["@nrwl/nx", "import"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
+        "prettier/prettier": "warn",
+        "@typescript-eslint/no-floating-promises": [
+          "warn",
+          { "ignoreVoid": true }
+        ],
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
@@ -17,6 +29,29 @@
                 "onlyDependOnLibsWithTags": ["*"]
               }
             ]
+          }
+        ],
+        "import/order": [
+          "warn",
+          {
+            "pathGroups": [
+              {
+                "pattern": "@nestjs/**",
+                "group": "external",
+                "position": "after"
+              },
+              {
+                "pattern": "@project/shared/**",
+                "group": "external",
+                "position": "after"
+              },
+              {
+                "pattern": "@project/**",
+                "group": "external",
+                "position": "after"
+              }
+            ],
+            "pathGroupsExcludedImportTypes": ["builtin"]
           }
         ]
       }

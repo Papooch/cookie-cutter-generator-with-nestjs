@@ -1,3 +1,13 @@
 {
-    "editor.formatOnSave": true
+  "typescript.preferences.quoteStyle": "single",
+
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+
+  "files.associations": {
+    ".env.local": "env",
+    ".local.env": "env"
+  }
 }

@@ -1,9 +1,10 @@
 {
   "singleQuote": true,
   "tabWidth": 4,
+  "endOfLine": "auto",
   "overrides": [
     {
-      "files": ["**/*.json", ".prettierrc"],
+      "files": ["**/*.json", "**/*.config.js", ".prettierrc"],
       "options": {
         "tabWidth": 2
       }

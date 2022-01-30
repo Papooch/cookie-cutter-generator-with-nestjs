@@ -1,0 +1,15 @@
+{
+  "root": "libs/shared/kafka-topics",
+  "sourceRoot": "libs/shared/kafka-topics/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/kafka-topics/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

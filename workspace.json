@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
-    "api": "apps/api"
+    "api": "apps/api",
+    "mailer": "apps/mailer",
+    "shared-kafka-topics": "libs/shared/kafka-topics"
   }
 }
