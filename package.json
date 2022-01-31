@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "docker:up": "docker-compose up -d",
+    "docker:up:test": "docker-compose --env-file .env.test up -d",
+    "docker:down": "docker-compose down",
+    "docker:down:test": "docker-compose --env-file .env.test down",
     "start": "nx serve",
+    "start:all": "nx run-many --target=serve --all",
     "build": "nx build",
     "test": "nx test"
   },
@@ -34,6 +39,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "~5.10.0",
     "@typescript-eslint/parser": "~5.10.0",
+    "cross-env": "^7.0.3",
     "eslint": "~8.7.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "^2.25.4",
