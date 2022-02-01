@@ -2,7 +2,11 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "mailer": "apps/mailer",
+    "api-authz": "libs/api/authz",
+    "api-entities": "libs/api/entities",
+    "api-msvc-clients": "libs/api/msvc-clients",
+    "converter": "apps/converter",
+    "notifications": "apps/notifications",
     "shared-kafka-topics": "libs/shared/kafka-topics"
   }
 }

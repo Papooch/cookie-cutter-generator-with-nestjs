@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './api-app.controller';
+import { AppService } from './api-app.service';
 
 describe('AppController', () => {
     let app: TestingModule;
@@ -16,9 +16,7 @@ describe('AppController', () => {
     describe('getData', () => {
         it('should return "Welcome to gateway!"', () => {
             const appController = app.get<AppController>(AppController);
-            expect(appController.getData()).toEqual({
-                message: 'Welcome to gateway!',
-            });
+            expect(appController.ping()).toEqual('pong');
         });
     });
 });

@@ -9,13 +9,16 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "esModuleInterop": true,
-    "target": "es2015",
+    "target": "es2017",
     "module": "esnext",
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@project/api-msvc-clients": ["libs/api/msvc-clients/src/index.ts"],
+      "@project/api/authz": ["libs/api/authz/src/index.ts"],
+      "@project/api/entities": ["libs/api/entities/src/index.ts"],
       "@project/shared/kafka-topics": ["libs/shared/kafka-topics/src/index.ts"]
     }
   },

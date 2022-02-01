@@ -1,16 +1,16 @@
 {
-  "root": "apps/mailer",
-  "sourceRoot": "apps/mailer/src",
+  "root": "apps/notifications",
+  "sourceRoot": "apps/notifications/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/mailer",
-        "main": "apps/mailer/src/main.ts",
-        "tsConfig": "apps/mailer/tsconfig.app.json",
-        "assets": ["apps/mailer/src/assets"]
+        "outputPath": "dist/apps/notifications",
+        "main": "apps/notifications/src/main.ts",
+        "tsConfig": "apps/notifications/tsconfig.app.json",
+        "assets": ["apps/notifications/src/assets"]
       },
       "configurations": {
         "production": {
@@ -23,7 +23,7 @@
     "serve": {
       "executor": "@nrwl/node:execute",
       "options": {
-        "buildTarget": "mailer:build",
+        "buildTarget": "notifications:build",
         "port": 7778
       }
     },
@@ -31,22 +31,22 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/mailer/**/*.ts"]
+        "lintFilePatterns": ["apps/notifications/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/mailer"],
+      "outputs": ["coverage/apps/notifications"],
       "options": {
-        "jestConfig": "apps/mailer/jest.config.js",
+        "jestConfig": "apps/notifications/jest.config.js",
         "passWithNoTests": true
       }
     },
     "e2e": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/mailer/e2e"],
+      "outputs": ["coverage/apps/notifications/e2e"],
       "options": {
-        "jestConfig": "apps/mailer/jest-e2e.config.js",
+        "jestConfig": "apps/notifications/jest-e2e.config.js",
         "passWithNoTests": true,
         "runInBand": true
       }

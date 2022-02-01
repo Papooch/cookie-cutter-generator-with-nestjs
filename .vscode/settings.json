@@ -9,5 +9,7 @@
   "files.associations": {
     ".env.local": "env",
     ".local.env": "env"
-  }
+  },
+  "spellright.language": ["cs", "en"],
+  "spellright.documentTypes": ["markdown", "latex"]
 }

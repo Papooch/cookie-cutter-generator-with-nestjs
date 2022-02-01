@@ -1,0 +1,55 @@
+{
+  "root": "apps/converter",
+  "sourceRoot": "apps/converter/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/converter",
+        "main": "apps/converter/src/main.ts",
+        "tsConfig": "apps/converter/tsconfig.app.json",
+        "assets": ["apps/converter/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "converter:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/converter/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/converter"],
+      "options": {
+        "jestConfig": "apps/converter/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "e2e": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/converter/e2e"],
+      "options": {
+        "jestConfig": "apps/converter/jest-e2e.config.js",
+        "passWithNoTests": true,
+        "runInBand": true
+      }
+    }
+  },
+  "tags": []
+}

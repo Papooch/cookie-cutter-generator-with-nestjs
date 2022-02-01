@@ -10,6 +10,7 @@ module.exports = {
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
   },
+  testMatch: ['**/*.e2e-spec.ts'],
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/mailer',
+  coverageDirectory: '../../coverage/apps/converter/e2e',
 };
