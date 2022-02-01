@@ -19,6 +19,8 @@ export interface CookieCutterAttrs {
     isPublic: boolean;
     userId: number;
     user?: UserAttrs;
+    outlineSvg: string;
+    detailSvg: string;
 }
 
 @Table
@@ -50,4 +52,10 @@ export class CookieCutter
 
     @BelongsTo(() => User)
     user: User;
+
+    @Column(DataType.TEXT)
+    outlineSvg: string;
+
+    @Column(DataType.TEXT)
+    detailSvg: string;
 }

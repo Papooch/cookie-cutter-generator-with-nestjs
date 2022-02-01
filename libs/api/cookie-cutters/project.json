@@ -1,0 +1,23 @@
+{
+  "root": "libs/api/cookie-cutters",
+  "sourceRoot": "libs/api/cookie-cutters/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/cookie-cutters/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/cookie-cutters"],
+      "options": {
+        "jestConfig": "libs/api/cookie-cutters/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

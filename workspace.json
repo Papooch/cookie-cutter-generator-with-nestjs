@@ -3,6 +3,7 @@
   "projects": {
     "api": "apps/api",
     "api-authz": "libs/api/authz",
+    "api-cookie-cutters": "libs/api/cookie-cutters",
     "api-entities": "libs/api/entities",
     "api-msvc-clients": "libs/api/msvc-clients",
     "converter": "apps/converter",
