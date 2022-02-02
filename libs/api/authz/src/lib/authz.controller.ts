@@ -1,3 +1,4 @@
+import 'express-session';
 import { Request, Response } from 'express';
 import {
     Body,
@@ -17,8 +18,7 @@ import { AuthzService } from './authz.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LocalStrategyGuard } from './strategies/local-strategy.guard';
 import { Public } from './decorators/public.route.decorator';
-import 'express-session';
-import { User } from './decorators/user.param.decorator';
+import { ReqUser } from './decorators/req-user.param.decorator';
 import { RequestUser } from './authz.interfaces';
 
 @UseFilters(AuthzFilter)
@@ -54,7 +54,7 @@ export class AuthzController {
     }
 
     @Get('whoami')
-    async whoami(@User() user: RequestUser) {
+    async whoami(@ReqUser() user: RequestUser) {
         return user;
     }
 }

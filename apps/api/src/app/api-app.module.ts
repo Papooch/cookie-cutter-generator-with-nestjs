@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthzModule } from '@project/api/authz';
+import { CookieCuttersModule } from '@project/api/cookie-cutters';
 import { AppController } from './api-app.controller';
 import { AppService } from './api-app.service';
 
@@ -19,6 +20,7 @@ import { AppService } from './api-app.service';
             logging: false,
         }),
         AuthzModule,
+        CookieCuttersModule,
     ],
     controllers: [AppController],
     providers: [AppService],
