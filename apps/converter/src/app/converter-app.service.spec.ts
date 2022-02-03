@@ -1,13 +1,20 @@
 import { Test } from '@nestjs/testing';
+import { CONVERT } from './converter-app.constants';
+import { ConverterAppService } from './converter-app.service';
 
-import { ConverterAppService } from './app.service';
-
+const mockConvert = jest.fn();
 describe('AppService', () => {
     let service: ConverterAppService;
 
     beforeAll(async () => {
         const app = await Test.createTestingModule({
-            providers: [ConverterAppService],
+            providers: [
+                {
+                    provide: CONVERT,
+                    useValue: mockConvert,
+                },
+                ConverterAppService,
+            ],
         }).compile();
 
         service = app.get<ConverterAppService>(ConverterAppService);
@@ -15,9 +22,7 @@ describe('AppService', () => {
 
     describe('getData', () => {
         it('should return "Welcome to converter!"', () => {
-            expect(service.getData()).toEqual({
-                message: 'Welcome to converter!',
-            });
+            /** */
         });
     });
 });
