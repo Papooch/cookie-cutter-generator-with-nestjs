@@ -10,7 +10,11 @@
         "outputPath": "dist/apps/converter",
         "main": "apps/converter/src/main.ts",
         "tsConfig": "apps/converter/tsconfig.app.json",
-        "assets": ["apps/converter/src/assets"]
+        "assets": [
+          "apps/converter/src/assets",
+          "apps/converter/src/docker-compose.yml",
+          "apps/converter/src/converter.scad"
+        ]
       },
       "configurations": {
         "production": {

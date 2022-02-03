@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { EventPattern } from '@nestjs/microservices';
 
-import { AppService } from './app.service';
+import { ConverterAppService } from './app.service';
 
 @Controller()
-export class AppController {
-    constructor(private readonly appService: AppService) {}
+export class ConverterAppController {
+    constructor(private readonly appService: ConverterAppService) {}
 
-    @Get()
-    getData() {
-        return this.appService.getData();
+    @EventPattern('cookie-cutters.uploaded')
+    convert() {
+        /** */
     }
 }
