@@ -19,7 +19,11 @@ export class ConverterAppService {
         const inputFileName = `${name}-${id}-in.svg`;
         const outputFileName = `${name}-${id}-out.stl`;
         fs.writeFileSync(path.join(fullworkDir, inputFileName), svg);
-        await this.convert(inputFileName, outputFileName, workdir);
-        return outputFileName;
+        const outputFilePath = await this.convert(
+            inputFileName,
+            outputFileName,
+            workdir
+        );
+        return outputFilePath;
     }
 }
