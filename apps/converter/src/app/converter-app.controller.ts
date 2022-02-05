@@ -12,10 +12,7 @@ export class ConverterAppController {
         @Payload('value') data: { userId: number; id: number; svg: string }
     ) {
         console.log('got this', data);
-        const converted = await this.appService.convertSvg(
-            data.svg,
-            data.id.toString()
-        );
-        console.log('File converted ', converted);
+        const convertedFilePath = await this.appService.convertSvg(data.svg);
+        console.log('File converted ', convertedFilePath);
     }
 }
