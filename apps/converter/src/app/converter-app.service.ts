@@ -16,8 +16,8 @@ export class ConverterAppService {
             fs.mkdirSync(fullworkDir, { recursive: true });
         }
         const id = uuid.v4();
-        const inputFileName = `$${id}-in.svg`;
-        const outputFileName = `$${id}-out.stl`;
+        const inputFileName = `${id}-in.svg`;
+        const outputFileName = `${id}-out.stl`;
         fs.writeFileSync(path.join(fullworkDir, inputFileName), svg);
         const outputFilePath = await this.convert(
             inputFileName,

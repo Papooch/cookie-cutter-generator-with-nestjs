@@ -4,6 +4,7 @@ import {
     Delete,
     Get,
     Inject,
+    Logger,
     Param,
     Post,
 } from '@nestjs/common';
@@ -14,6 +15,8 @@ import { CookieCuttersService } from './cookie-cutters.service';
 
 @Controller('cookie-cutters')
 export class CookieCuttersController {
+    private logger = new Logger(CookieCuttersController.name);
+
     constructor(
         @Inject(KAFKA_CLIENT) private readonly kafka: ClientKafka,
         private readonly cookieCuttersService: CookieCuttersService
@@ -45,7 +48,10 @@ export class CookieCuttersController {
     }
 
     @EventPattern('cookie-cutters.conversion.started')
-    async conversionStarted(@Payload() msg: { userId: number; id: number }) {
+    async conversionStarted(
+        @Payload('value') msg: { userId: number; id: number }
+    ) {
+        this.logger.log(`Cutter id ${msg.id} started processing`);
         await this.cookieCuttersService.update(msg.userId, msg.id, {
             status: 'PROCESSING',
         });
@@ -53,11 +59,22 @@ export class CookieCuttersController {
 
     @EventPattern('cookie-cutters.conversion.finished')
     async conversionFinished(
-        @Payload() msg: { userId: number; id: number; location }
+        @Payload('value') msg: { userId: number; id: number; location: string }
     ) {
+        this.logger.log(`Cutter id ${msg.id} ready to download`);
         await this.cookieCuttersService.update(msg.userId, msg.id, {
             location: msg.location,
             status: 'READY',
+        });
+    }
+
+    @EventPattern('cookie-cutters.conversion.failed')
+    async conversionFailed(
+        @Payload('value') msg: { userId: number; id: number }
+    ) {
+        this.logger.warn(`Cutter id ${msg.id} processing failed`);
+        await this.cookieCuttersService.update(msg.userId, msg.id, {
+            status: 'FAILED',
         });
     }
 

@@ -5,7 +5,7 @@ import { KafkaClientCoreModule } from '@project/shared-kafka-client-core';
     imports: [
         KafkaClientCoreModule.registerAsync({
             useFactory: () => ({
-                brokerUri: 'localhost:29092',
+                brokerUri: `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`,
                 clientId: 'api',
             }),
         }),

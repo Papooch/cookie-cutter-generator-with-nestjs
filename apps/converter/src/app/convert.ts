@@ -29,11 +29,16 @@ export const convert: ConvertFunction = (
                 if (error) {
                     return reject(new ConversionError(error.message));
                 }
+                console.log('stdout: ', stdout);
+                console.log('stderr: ', stderr);
+                let message = '';
+                message += `\nstdout: ${stdout}`;
+                message += `\nstderr: ${stderr}`;
                 if (stderr && stderr.includes('openscad  |')) {
-                    let message = '';
-                    message += `\nstdout: ${stdout}`;
-                    message += `\nstderr: ${stderr}`;
                     return reject(new ConversionError(message));
+                }
+                if (stdout && stdout.includes('openscad exited with code 1')) {
+                    return reject(new ConversionError('Invalid SVG file'));
                 }
                 resolve(outputFile);
             }

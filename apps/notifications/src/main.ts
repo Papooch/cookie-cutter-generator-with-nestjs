@@ -11,7 +11,9 @@ async function bootstrap() {
             transport: Transport.KAFKA,
             options: {
                 client: {
-                    brokers: ['localhost:29092'],
+                    brokers: [
+                        `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`,
+                    ],
                     clientId: 'mailer',
                 },
                 consumer: {
