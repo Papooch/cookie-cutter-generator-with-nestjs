@@ -16,10 +16,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@project/api-msvc-clients": ["libs/api/msvc-clients/src/index.ts"],
       "@project/api/authz": ["libs/api/authz/src/index.ts"],
       "@project/api/cookie-cutters": ["libs/api/cookie-cutters/src/index.ts"],
       "@project/api/entities": ["libs/api/entities/src/index.ts"],
+      "@project/api/kafka-client": ["libs/api/kafka-client/src/index.ts"],
+      "@project/shared-kafka-client-core": [
+        "libs/shared/kafka-client-core/src/index.ts"
+      ],
       "@project/shared/kafka-topics": ["libs/shared/kafka-topics/src/index.ts"]
     }
   },

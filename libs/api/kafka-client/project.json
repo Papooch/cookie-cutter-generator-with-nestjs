@@ -1,0 +1,23 @@
+{
+  "root": "libs/api/kafka-client",
+  "sourceRoot": "libs/api/kafka-client/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/kafka-client/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/kafka-client"],
+      "options": {
+        "jestConfig": "libs/api/kafka-client/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

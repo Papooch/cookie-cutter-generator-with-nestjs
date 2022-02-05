@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { PassportModule } from '@nestjs/passport';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { MsvcClientsModule } from '@project/api-msvc-clients';
 import { User } from '@project/api/entities';
+import { ApiKafkaClientModule } from '@project/api/kafka-client';
 import { AuthzController } from './authz.controller';
 import { AuthzGuard } from './authz.guard';
 import { AuthzService } from './authz.service';
@@ -16,7 +16,7 @@ import { LocalStrategy } from './strategies/local.strategy';
             session: true,
         }),
         SequelizeModule.forFeature([User]),
-        MsvcClientsModule,
+        ApiKafkaClientModule,
     ],
     providers: [
         AuthzService,

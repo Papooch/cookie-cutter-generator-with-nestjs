@@ -1,20 +1,20 @@
 {
-  "root": "libs/api/msvc-clients",
-  "sourceRoot": "libs/api/msvc-clients/src",
+  "root": "libs/shared/kafka-client-core",
+  "sourceRoot": "libs/shared/kafka-client-core/src",
   "projectType": "library",
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/api/msvc-clients/**/*.ts"]
+        "lintFilePatterns": ["libs/shared/kafka-client-core/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/api/msvc-clients"],
+      "outputs": ["coverage/libs/shared/kafka-client-core"],
       "options": {
-        "jestConfig": "libs/api/msvc-clients/jest.config.js",
+        "jestConfig": "libs/shared/kafka-client-core/jest.config.js",
         "passWithNoTests": true
       }
     }

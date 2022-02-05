@@ -8,7 +8,7 @@ import {
     Post,
 } from '@nestjs/common';
 import { ClientKafka, EventPattern, Payload } from '@nestjs/microservices';
-import { KAFKA_CLIENT } from '@project/api-msvc-clients';
+import { KAFKA_CLIENT } from '@project/shared-kafka-client-core';
 import { ReqUser } from '@project/api/authz';
 import { CookieCuttersService } from './cookie-cutters.service';
 

@@ -5,9 +5,10 @@
     "api-authz": "libs/api/authz",
     "api-cookie-cutters": "libs/api/cookie-cutters",
     "api-entities": "libs/api/entities",
-    "api-msvc-clients": "libs/api/msvc-clients",
+    "api-kafka-client": "libs/api/kafka-client",
     "converter": "apps/converter",
     "notifications": "apps/notifications",
+    "shared-kafka-client-core": "libs/shared/kafka-client-core",
     "shared-kafka-topics": "libs/shared/kafka-topics"
   }
 }

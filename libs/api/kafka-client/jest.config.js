@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'api-msvc-clients',
+  displayName: 'api-kafka-client',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/libs/api/msvc-clients',
+  coverageDirectory: '../../../coverage/libs/api/kafka-client',
 };

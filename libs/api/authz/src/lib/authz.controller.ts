@@ -12,7 +12,7 @@ import {
     UseGuards,
 } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
-import { KAFKA_CLIENT } from '@project/api-msvc-clients';
+import { KAFKA_CLIENT } from '@project/shared-kafka-client-core';
 import { AuthzFilter } from './authz.filter';
 import { AuthzService } from './authz.service';
 import { CreateUserDto } from './dto/create-user.dto';
