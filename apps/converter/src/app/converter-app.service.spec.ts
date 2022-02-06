@@ -4,7 +4,7 @@ import mockFs from 'mock-fs';
 import { Test } from '@nestjs/testing';
 import { CONVERT } from './converter-app.constants';
 import { ConverterAppService } from './converter-app.service';
-import { ConversionError } from './convert';
+import { ConversionError } from './convert.errors';
 
 const mockConvert = jest.fn();
 describe('AppService', () => {
@@ -31,7 +31,6 @@ describe('AppService', () => {
     describe('convertSvg', () => {
         const svg = '<svg></svg>';
         it('generates the converted file and returns a path to it', async () => {
-            // arrange
             const resultFileContent = 'file-content';
             mockConvert.mockImplementationOnce(
                 async (inputFile, outputFile, workdir) => {
@@ -41,10 +40,8 @@ describe('AppService', () => {
                 }
             );
 
-            // act
             const filePath = await service.convertSvg(svg);
 
-            // assert
             expect(fs.existsSync(filePath)).toBeTrue();
             const fileContent = fs.readFileSync(filePath, 'utf-8');
             expect(fileContent).toEqual(resultFileContent);

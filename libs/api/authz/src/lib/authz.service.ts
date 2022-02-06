@@ -35,7 +35,6 @@ export class AuthzService {
         username: string,
         password: string
     ): Promise<UserAttrs | null> {
-        console.log('u', username, password);
         const user = await this.findByName(username);
         if (!user) return null;
         if (!user.verifyPassword(password)) return null;

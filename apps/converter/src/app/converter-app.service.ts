@@ -11,7 +11,7 @@ export class ConverterAppService {
 
     async convertSvg(svg: string) {
         const workdir = 'tmp';
-        const fullworkDir = path.join(__dirname, workdir);
+        const fullworkDir = path.join(process.cwd(), workdir);
         if (!fs.existsSync(fullworkDir)) {
             fs.mkdirSync(fullworkDir, { recursive: true });
         }

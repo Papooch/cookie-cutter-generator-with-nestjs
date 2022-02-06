@@ -17,7 +17,6 @@ export class ConverterAppController {
     async convert(
         @Payload('value') data: { userId: number; id: number; svg: string }
     ) {
-        this.logger.log('got this', data);
         try {
             this.kafka.emit('cookie-cutters.conversion.started', {
                 userId: data.userId,
@@ -26,7 +25,6 @@ export class ConverterAppController {
             const convertedFilePath = await this.appService.convertSvg(
                 data.svg
             );
-            this.logger.log('File converted ', convertedFilePath);
             this.kafka.emit('cookie-cutters.conversion.finished', {
                 userId: data.userId,
                 id: data.id,

@@ -1,6 +1,9 @@
-import { exec } from 'child_process';
-
-export class ConversionError extends Error {}
+import { exec, execSync } from 'child_process';
+import {
+    ConversionError,
+    MalformedInputFileConversionError,
+    NoInputFileConversionError,
+} from './convert.errors';
 
 export type ConvertFunction = (
     inputFile: string,
@@ -14,31 +17,44 @@ export const convert: ConvertFunction = (
     workdir = 'tmp'
 ) =>
     new Promise((resolve, reject) => {
+        /**
+         * relative path to process.cwd() from `CONVERTER_SCAD_FILE`
+         * this is needed in order for openscad to find the input file
+         * because it chokes on absolute paths *on Windows*
+         */
+        const relativeRoot = '../'.repeat(
+            process.env.CONVERTER_SCAD_FILE.split('/').length - 1
+        );
         exec(
-            'docker-compose up --force-recreate',
+            `docker run ` +
+                `--name=openscad-converter ` +
+                `-w /app ` +
+                `-v ${process.cwd()}:/app ` +
+                `wtnb75/openscad ` +
+                `openscad ${process.env.CONVERTER_SCAD_FILE} ` +
+                `-o ${workdir}/${outputFile} ` +
+                `-D file=\\"${relativeRoot}${workdir}/${inputFile}\\"`,
             {
-                cwd: __dirname,
-                env: {
-                    ...process.env,
-                    CONVERTER_WORKING_DIRECTORY: __dirname,
-                    CONVERTER_INPUT_FILE: workdir + '/' + inputFile,
-                    CONVERTER_OUTPUT_FILE: workdir + '/' + outputFile,
-                },
+                cwd: process.cwd(),
             },
-            (error, stdout, stderr) => {
+            (error) => {
+                execSync(`docker rm openscad-converter`);
                 if (error) {
+                    if (error.message.match(/Can't open file/)) {
+                        return reject(
+                            new NoInputFileConversionError(
+                                `Input file doesn't exist`
+                            )
+                        );
+                    }
+                    if (error.message.match(/Error parsing file/)) {
+                        return reject(
+                            new MalformedInputFileConversionError(
+                                'Input file is malformed'
+                            )
+                        );
+                    }
                     return reject(new ConversionError(error.message));
-                }
-                console.log('stdout: ', stdout);
-                console.log('stderr: ', stderr);
-                let message = '';
-                message += `\nstdout: ${stdout}`;
-                message += `\nstderr: ${stderr}`;
-                if (stderr && stderr.includes('openscad  |')) {
-                    return reject(new ConversionError(message));
-                }
-                if (stdout && stdout.includes('openscad exited with code 1')) {
-                    return reject(new ConversionError('Invalid SVG file'));
                 }
                 resolve(outputFile);
             }

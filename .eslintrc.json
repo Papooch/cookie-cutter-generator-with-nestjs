@@ -14,7 +14,6 @@
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "prettier/prettier": "warn",
-        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-floating-promises": [
           "warn",
           { "ignoreVoid": true }
@@ -60,7 +59,9 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],

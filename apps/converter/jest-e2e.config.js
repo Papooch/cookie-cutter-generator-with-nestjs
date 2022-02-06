@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'mailer',
+  displayName: 'converter',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
