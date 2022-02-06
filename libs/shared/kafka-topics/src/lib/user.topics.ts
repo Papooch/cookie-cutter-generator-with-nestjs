@@ -1,3 +1,3 @@
-export const UserTopics = {
-    USER_REGISTERED: 'a',
-};
+export enum UserTopics {
+    REGISTERED = 'user.registered',
+}

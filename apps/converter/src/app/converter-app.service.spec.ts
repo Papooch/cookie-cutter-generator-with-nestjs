@@ -34,7 +34,11 @@ describe('AppService', () => {
             const resultFileContent = 'file-content';
             mockConvert.mockImplementationOnce(
                 async (inputFile, outputFile, workdir) => {
-                    const filePath = path.join(__dirname, workdir, outputFile);
+                    const filePath = path.join(
+                        process.cwd(),
+                        workdir,
+                        outputFile
+                    );
                     fs.writeFileSync(filePath, resultFileContent);
                     return filePath;
                 }

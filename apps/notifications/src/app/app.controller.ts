@@ -1,6 +1,6 @@
-import { Controller, Get, Logger } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
-
+import { Controller, Logger } from '@nestjs/common';
+import { UserTopics } from '@project/shared/kafka-topics';
+import { TypedEventPattern } from '@project/shared-kafka-client-core';
 import { AppService } from './app.service';
 
 @Controller()
@@ -9,8 +9,8 @@ export class AppController {
 
     constructor(private readonly appService: AppService) {}
 
-    @EventPattern('user.registered')
-    getData(data: any) {
+    @TypedEventPattern(UserTopics.REGISTERED)
+    onUserRegistered(data: any) {
         this.logger.log(`received:`, data);
         const response = this.appService.getData();
         this.logger.log(JSON.stringify(response));

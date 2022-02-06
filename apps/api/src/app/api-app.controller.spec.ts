@@ -1,22 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-
-import { AppController } from './api-app.controller';
-import { AppService } from './api-app.service';
+import { ApiAppController } from './api-app.controller';
 
 describe('AppController', () => {
     let app: TestingModule;
 
     beforeAll(async () => {
         app = await Test.createTestingModule({
-            controllers: [AppController],
-            providers: [AppService],
+            controllers: [ApiAppController],
         }).compile();
     });
 
-    describe('getData', () => {
-        it('should return "Welcome to gateway!"', () => {
-            const appController = app.get<AppController>(AppController);
-            expect(appController.ping()).toEqual('pong');
+    describe('ping', () => {
+        it('returns "pong"', () => {
+            const appController = app.get(ApiAppController);
+            return expect(appController.ping()).resolves.toEqual('pong');
         });
     });
 });

@@ -23,6 +23,7 @@
       "@project/shared-kafka-client-core": [
         "libs/shared/kafka-client-core/src/index.ts"
       ],
+      "@project/shared-kafka-dtos": ["libs/shared/kafka-dtos/src/index.ts"],
       "@project/shared/kafka-topics": ["libs/shared/kafka-topics/src/index.ts"]
     }
   },

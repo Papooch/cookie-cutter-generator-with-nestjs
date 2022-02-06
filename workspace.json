@@ -9,6 +9,7 @@
     "converter": "apps/converter",
     "notifications": "apps/notifications",
     "shared-kafka-client-core": "libs/shared/kafka-client-core",
+    "shared-kafka-dtos": "libs/shared/kafka-dtos",
     "shared-kafka-topics": "libs/shared/kafka-topics"
   }
 }

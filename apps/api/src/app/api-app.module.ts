@@ -2,15 +2,14 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthzModule } from '@project/api/authz';
 import { CookieCuttersModule } from '@project/api/cookie-cutters';
-import { AppController } from './api-app.controller';
-import { AppService } from './api-app.service';
+import { ApiAppController } from './api-app.controller';
 
 @Module({
     imports: [
         SequelizeModule.forRoot({
             dialect: 'postgres',
             host: 'localhost',
-            port: 5432,
+            port: +process.env.POSTGRES_PORT,
             username: 'postgres',
             password: 'postgres',
             autoLoadModels: true,
@@ -22,7 +21,6 @@ import { AppService } from './api-app.service';
         AuthzModule,
         CookieCuttersModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [ApiAppController],
 })
 export class AppModule {}

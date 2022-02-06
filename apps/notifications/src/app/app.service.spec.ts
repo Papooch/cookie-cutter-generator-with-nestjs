@@ -14,9 +14,9 @@ describe('AppService', () => {
     });
 
     describe('getData', () => {
-        it('should return "Welcome to mailer!"', () => {
+        it('should return "Welcome to notifications!"', () => {
             expect(service.getData()).toEqual({
-                message: 'Welcome to mailer!',
+                message: 'Welcome to notifications!',
             });
         });
     });
