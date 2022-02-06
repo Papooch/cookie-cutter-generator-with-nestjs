@@ -1,54 +1,30 @@
 import fs from 'fs';
-import { config } from 'dotenv';
-import { Kafka, Consumer, Producer, logLevel } from 'kafkajs';
 import waitForExpect from 'wait-for-expect';
 import { INestMicroservice } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { CookieCuttersTopics } from '@project/shared/kafka-topics';
+import { createMockedKafkaClient } from '@project/shared/testing/kafka-client-mock';
 import { ConverterAppModule } from '../app/converter-app.module';
-config({ path: '.env.test' });
+
+const mockKafka = createMockedKafkaClient({
+    broker: `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`,
+    clientId: 'converter-mock-server',
+    groupId: 'converter-mock-consumer',
+    subscribeTo: [
+        CookieCuttersTopics.CONVERSION_STARTED,
+        CookieCuttersTopics.CONVERSION_FINISHED,
+        CookieCuttersTopics.CONVERSION_FAILED,
+    ],
+});
 
 describe('converter e2e', () => {
     let app: INestMicroservice;
-    let consumer: Consumer;
-    let producer: Producer;
-    const messages: { topic: string; value: any }[] = [];
-    const lastMessageInTopic = (topic: string) =>
-        messages
-            .slice()
-            .reverse()
-            .find((m) => m.topic === topic)?.value;
 
     beforeAll(async () => {
         // spin up mock consumer
-        const kafka = new Kafka({
-            logLevel: logLevel.ERROR,
-            clientId: 'mock-app',
-            brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
-        });
-        consumer = kafka.consumer({ groupId: 'mock-group' });
-        producer = kafka.producer();
-        await Promise.all([
-            producer.connect(),
-            consumer.connect(),
-            consumer.subscribe({
-                topic: 'cookie-cutters.conversion.started',
-            }),
-            consumer.subscribe({
-                topic: 'cookie-cutters.conversion.failed',
-            }),
-            consumer.subscribe({
-                topic: 'cookie-cutters.conversion.finished',
-            }),
-        ]);
-        await consumer.run({
-            eachMessage: async ({ topic, message }) => {
-                messages.push({
-                    topic,
-                    value: JSON.parse(message.value.toString()),
-                });
-            },
-        });
+        await mockKafka.connect();
+
         // clear tmp folder
         fs.rmSync('tmp', { force: true, recursive: true });
 
@@ -75,11 +51,7 @@ describe('converter e2e', () => {
     }, 30_000);
 
     afterAll(async () => {
-        await Promise.all([
-            consumer.disconnect(),
-            producer.disconnect(),
-            app.close(),
-        ]);
+        await Promise.all([mockKafka.disconnect(), app.close()]);
     }, 30_000);
 
     describe("on 'cookie-cutters.uploaded'", () => {
@@ -87,8 +59,8 @@ describe('converter e2e', () => {
         const userId = Math.random();
 
         it("should publish to 'started' and 'finished' topics with ids and location when conversion succeeds", async () => {
-            await producer.send({
-                topic: 'cookie-cutters.uploaded',
+            await mockKafka.producer.send({
+                topic: CookieCuttersTopics.UPLOADED,
                 messages: [
                     {
                         value: JSON.stringify({
@@ -102,15 +74,17 @@ describe('converter e2e', () => {
 
             await waitForExpect(() => {
                 expect(
-                    lastMessageInTopic('cookie-cutters.conversion.started')
+                    mockKafka.lastMessageInTopic(
+                        CookieCuttersTopics.CONVERSION_STARTED
+                    )
                 ).toEqual({ id, userId });
             });
 
             let lastMessage: Record<string, any>;
             await waitForExpect(
                 () => {
-                    lastMessage = lastMessageInTopic(
-                        'cookie-cutters.conversion.finished'
+                    lastMessage = mockKafka.lastMessageInTopic(
+                        CookieCuttersTopics.CONVERSION_FINISHED
                     );
                     expect(lastMessage).toMatchObject({ id, userId });
                 },
@@ -121,8 +95,8 @@ describe('converter e2e', () => {
         }, 60_000);
 
         it("should publish to 'started' and 'failed' topics with ids when the conversion fails", async () => {
-            await producer.send({
-                topic: 'cookie-cutters.uploaded',
+            await mockKafka.producer.send({
+                topic: CookieCuttersTopics.UPLOADED,
                 messages: [
                     {
                         value: JSON.stringify({
@@ -136,14 +110,16 @@ describe('converter e2e', () => {
 
             await waitForExpect(() => {
                 expect(
-                    lastMessageInTopic('cookie-cutters.conversion.started')
+                    mockKafka.lastMessageInTopic(
+                        CookieCuttersTopics.CONVERSION_STARTED
+                    )
                 ).toEqual({ id, userId });
             });
 
             await waitForExpect(
                 () => {
-                    const lastMessage = lastMessageInTopic(
-                        'cookie-cutters.conversion.failed'
+                    const lastMessage = mockKafka.lastMessageInTopic(
+                        CookieCuttersTopics.CONVERSION_FAILED
                     );
                     expect(lastMessage).toMatchObject({ id, userId });
                 },

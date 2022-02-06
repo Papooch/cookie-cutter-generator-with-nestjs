@@ -1,0 +1,23 @@
+{
+  "root": "libs/shared/testing/kafka-client-mock",
+  "sourceRoot": "libs/shared/testing/kafka-client-mock/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/testing/kafka-client-mock/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/testing/kafka-client-mock"],
+      "options": {
+        "jestConfig": "libs/shared/testing/kafka-client-mock/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
