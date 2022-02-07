@@ -38,10 +38,10 @@ describe('converter e2e', () => {
                         brokers: [
                             `${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`,
                         ],
-                        clientId: 'converter',
+                        clientId: 'converter-test',
                     },
                     consumer: {
-                        groupId: 'converter-consumer',
+                        groupId: 'converter-consumer-test',
                     },
                 },
             }

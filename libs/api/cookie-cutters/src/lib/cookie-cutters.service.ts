@@ -1,7 +1,7 @@
 import { WhereOptions } from 'sequelize/types';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CookieCutter, CookieCutterAttrs } from '@project/api/entities';
+import { CookieCutter, CookieCutterAttrs, User } from '@project/api/entities';
 
 @Injectable()
 export class CookieCuttersService {
@@ -22,20 +22,42 @@ export class CookieCuttersService {
         });
     }
 
-    getOne(userId: number, id: number): Promise<CookieCutterAttrs> {
-        return this.cookieCutterRepository.findOne({
+    async getOne(userId: number, id: number): Promise<CookieCutterAttrs> {
+        const cutter = await this.cookieCutterRepository.findOne({
             where: {
                 id,
-                userId,
             },
         });
+        if (!cutter) return null;
+        if (cutter.isPublic) return cutter;
+        if (cutter.userId === userId) return cutter;
+        return null;
     }
 
-    async getAll(userId?: number): Promise<[CookieCutterAttrs[], number]> {
-        const where: WhereOptions<CookieCutterAttrs> = {};
-        userId && (where.userId = userId);
+    async getAllPublic(page = 1): Promise<[CookieCutterAttrs[], number]> {
         const { rows, count } =
-            await this.cookieCutterRepository.findAndCountAll({ where });
+            await this.cookieCutterRepository.findAndCountAll({
+                where: {
+                    isPublic: true,
+                },
+                limit: 10,
+                offset: (page - 1) * 10,
+            });
+        return [rows, count];
+    }
+
+    async getAllForUser(
+        userId: number,
+        page = 1
+    ): Promise<[CookieCutterAttrs[], number]> {
+        const { rows, count } =
+            await this.cookieCutterRepository.findAndCountAll({
+                where: {
+                    userId,
+                },
+                limit: 10,
+                offset: (page - 1) * 10,
+            });
         return [rows, count];
     }
 
@@ -51,7 +73,7 @@ export class CookieCuttersService {
             },
         });
         await cutter.update(fields);
-        return cutter.toJSON();
+        return cutter;
     }
 
     delete() {

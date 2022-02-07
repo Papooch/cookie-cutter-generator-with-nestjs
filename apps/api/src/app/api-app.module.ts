@@ -23,4 +23,4 @@ import { ApiAppController } from './api-app.controller';
     ],
     controllers: [ApiAppController],
 })
-export class AppModule {}
+export class ApiAppModule {}
