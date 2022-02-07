@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "nx": "nx",
     "docker:up": "docker-compose up -d",
     "docker:up:test": "docker-compose --env-file .env.e2e up -d",
     "docker:down": "docker-compose down",
@@ -10,7 +11,8 @@
     "start": "nx serve",
     "start:all": "nx run-many --target=serve --all",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "e2e": "nx e2e"
   },
   "private": true,
   "dependencies": {
