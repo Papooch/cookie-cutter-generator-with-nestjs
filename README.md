@@ -69,9 +69,3 @@ Also... there is no frontend, so you need to use a tool like Postman.
     - `npm run e2e api`
     - `npm run e2e converter`
 
----
-
-This app contains a very dumbed down version of the original OpenSCAD script, it would take about 30 minutes to generate the STL. A preview of what the full version is capable of is show below:
-
-![Before and after](/images/full-version.png)
-(I should probably finally upload it to github as well...)
